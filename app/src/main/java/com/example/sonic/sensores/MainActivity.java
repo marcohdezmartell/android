@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View v) {
                 if(!jugando){
-                    posicion= new Random().nextInt(2);
+                    posicion= (int)(Math.random()*3);
                     pasado = 3;
                     empezar.setText("FINALIZAR");
                     jugando = true;
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                 puntuacion++;
                                 puntos.setText(puntuacion+"");
                                   pasado = posicion;
-                                  posicion= new Random().nextInt(2);
+                                  posicion= (int)(Math.random()*3);
                                     movimiento.setText(sposiciones[posicion]);
                                     cronometro.cancel();
                                   cronometro();
