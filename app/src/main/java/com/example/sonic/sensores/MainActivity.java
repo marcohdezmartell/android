@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     Posicion[] posiciones;
     String sposiciones[];
     long puntuacion;
+    MediaPlayer sonidos[];
     /*
         ejes x,y,z
         posicion 0 parado
@@ -66,11 +68,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         posiciones[3] = new Posicion(Posicion.PARADO);
         sposiciones=new String[4];
 
-        sposiciones[0]="ACOSTADO";
+        sposiciones[0]="ABAJO";
         sposiciones[1]="IZQUIERDA";
         sposiciones[2]="DERECHA";
         sposiciones[3]="REGRESA";
 
+        sonidos = new MediaPlayer[4];
+        sonidos[0] = MediaPlayer.create(this, R.raw.abajo);
+        sonidos[1] = MediaPlayer.create(this, R.raw.izquierda);
+        sonidos[2] = MediaPlayer.create(this, R.raw.derecha);
+        sonidos[3] = MediaPlayer.create(this, R.raw.regresa);
         empezar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     jugando = true;
                     movimiento.setTextColor(Color.BLACK);
                     movimiento.setText(sposiciones[posicion]);
+                    sonidos[posicion].start();
                     puntuacion=0;
                     puntos.setText(puntuacion+"");
                     cronometro();
@@ -122,12 +130,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                   posicion= (int)(Math.random()*3);
                                     movimiento.setText(sposiciones[posicion]);
                                     cronometro.cancel();
+                                    sonidos[posicion].start();
                                   cronometro();
 
                                 }else{
                                   pasado = posicion;
                                   posicion=3;
                                   movimiento.setText(sposiciones[3]);
+                                    sonidos[posicion].start();
                                 }
                                 break;
                           }else{if(i!=pasado){
